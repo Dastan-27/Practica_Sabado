@@ -1,0 +1,32 @@
+{
+  "name": "practica_sabado",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173 --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server.js",
+    "lint": "node scripts/lint-check.js",
+    "test": "node scripts/verify-tickets.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dastan-27/Practica_Sabado.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dastan-27/Practica_Sabado/issues"
+  },
+  "homepage": "https://github.com/Dastan-27/Practica_Sabado#readme",
+  "devDependencies": {
+    "vite": "^8.3.2"
+  },
+  "dependencies": {
+    "@configcat/sdk": "^1.1.0",
+    "configcat-js": "^9.6.1"
+  }
+}

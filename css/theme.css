@@ -1,0 +1,159 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO: TOKENS DE COLOR Y CONTRASTE (DÍA / NOCHE)
+   Optimizado para máxima legibilidad, accesibilidad WCAG AAA y nitidez
+   ========================================================================== */
+
+/* ==========================================================================
+   TEMA CLARO (LIGHT MODE / DÍA)
+   Ajustado para eliminar textos pálidos y garantizar contraste nítido (> 7:1)
+   ========================================================================== */
+:root,
+html[data-theme="light"],
+body[data-theme="light"] {
+  color-scheme: light;
+
+  /* Fondos Día */
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-hover: #f1f5f9;
+  --bg-sidebar: #ffffff;
+  --bg-topbar: rgba(255, 255, 255, 0.96);
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-badge: #e2e8f0;
+  --bg-code: #0b1120;
+
+  /* Bordes Día (Con mayor definición para delimitar tarjetas) */
+  --border-subtle: #e2e8f0;
+  --border-default: #cbd5e1;
+  --border-strong: #94a3b8;
+  --border-accent: rgba(230, 36, 41, 0.35);
+
+  /* Textos Día (Alto Contraste: sin grises claros ilegibles) */
+  --text-primary: #090d16;    /* Negro tinta de alta claridad */
+  --text-secondary: #1e293b;  /* Slate oscuro de lectura confortable (> 10:1) */
+  --text-muted: #475569;      /* Gris medio definido (> 7:1, legible) */
+  --text-inverse: #ffffff;
+
+  /* Marca Superhéroes: Rojo Marvel & Azul Cómic */
+  --marvel-red: #d91b24;
+  --marvel-red-dark: #b8141c;
+  --marvel-blue: #0284c7;
+  --dc-blue: #0066ee;
+  --superhero-gradient: linear-gradient(135deg, #d91b24 0%, #e11d48 100%);
+  --superhero-gradient-glow: 0 6px 20px rgba(217, 27, 36, 0.25);
+
+  /* Semántica y Estados */
+  --color-success: #059669;
+  --color-success-bg: rgba(5, 150, 105, 0.12);
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-danger: #dc2626;
+  --color-danger-bg: rgba(220, 38, 38, 0.12);
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.12);
+
+  /* Sombras Día */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.15);
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transición */
+  --theme-transition: background-color 0.22s ease,
+                      color 0.22s ease,
+                      border-color 0.22s ease,
+                      box-shadow 0.22s ease;
+}
+
+/* ==========================================================================
+   TEMA OSCURO (DARK MODE / NOCHE)
+   ========================================================================== */
+[data-theme="dark"],
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Fondos Noche */
+  --bg-app: #080c14;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #1e293b;
+  --bg-surface-hover: #1e293b;
+  --bg-sidebar: #0b1120;
+  --bg-topbar: rgba(11, 17, 32, 0.92);
+  --bg-card: #0f172a;
+  --bg-input: #162033;
+  --bg-badge: #1e293b;
+  --bg-code: #0b1120;
+
+  /* Bordes Noche */
+  --border-subtle: #1e293b;
+  --border-default: #283548;
+  --border-strong: #3b4d6b;
+  --border-accent: rgba(248, 113, 113, 0.4);
+
+  /* Textos Noche */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  /* Marca Superhéroes en Noche */
+  --marvel-red: #ff4d4f;
+  --marvel-red-dark: #d9363e;
+  --marvel-blue: #38bdf8;
+  --dc-blue: #38bdf8;
+  --superhero-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  --superhero-gradient-glow: 0 8px 32px rgba(239, 68, 68, 0.4);
+
+  /* Semántica Noche */
+  --color-success: #34d399;
+  --color-success-bg: rgba(52, 211, 153, 0.16);
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgba(251, 191, 36, 0.16);
+  --color-danger: #f87171;
+  --color-danger-bg: rgba(248, 113, 113, 0.16);
+  --color-info: #38bdf8;
+  --color-info-bg: rgba(56, 189, 248, 0.16);
+
+  /* Sombras Noche */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.65);
+  --shadow-xl: 0 20px 45px rgba(0, 0, 0, 0.75);
+}
+
+/* Transición suave global */
+body,
+.app-sidebar,
+.app-topbar,
+.section-card,
+.stat-card,
+.project-card,
+.modal-container,
+.search-input,
+.btn-secondary,
+.mode-hamburger-btn,
+.mode-dropdown-menu {
+  transition: var(--theme-transition);
+}
+
+/* Respeto a usuarios con sensibilidad al movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

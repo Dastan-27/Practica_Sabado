@@ -1,0 +1,29 @@
+# ==============================================================================
+# RENDER BLUEPRINT SPECIFICATION (render.yaml)
+# Infraestructura como Código (IaC) para Despliegue Continuo Automático
+# ==============================================================================
+
+services:
+  - type: web
+    name: superhero-hub-production
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+
+    # Comandos de ciclo de vida
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+
+    # Endpoint de Health Check
+    healthCheckPath: /healthz
+
+    # Variables de entorno
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CONFIGCAT_SDK_KEY
+        sync: false

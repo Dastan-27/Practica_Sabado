@@ -1,0 +1,222 @@
+/* ==========================================================================
+   MODE DROPDOWN & HAMBURGER SELECTOR (Light Mode / Dark Mode)
+   ========================================================================== */
+
+.mode-selector-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón Principal: Mode: [Símbolo] [Hamburguesa ☰] */
+.mode-hamburger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 0.45rem 0.875rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.mode-hamburger-btn:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.mode-hamburger-btn:active {
+  transform: translateY(0);
+}
+
+.mode-hamburger-btn.is-open {
+  border-color: var(--marvel-red);
+  box-shadow: 0 0 0 3px rgba(230, 36, 41, 0.15);
+}
+
+.mode-text-label {
+  color: var(--text-secondary);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Símbolo dinámico del modo actual */
+.mode-symbol-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-badge);
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+
+.mode-hamburger-btn:hover .mode-symbol-badge {
+  transform: scale(1.15) rotate(15deg);
+}
+
+/* Icono Hamburguesa Animado (3 barras) */
+.hamburger-bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 16px;
+  height: 12px;
+  position: relative;
+}
+
+.hamburger-bars span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animación de las barras al abrir el menú (se convierte en X) */
+.mode-hamburger-btn.is-open .hamburger-bars span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.mode-hamburger-btn.is-open .hamburger-bars span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mode-hamburger-btn.is-open .hamburger-bars span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* Menú Desplegable Flotante */
+.mode-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 1200;
+  animation: dropdownSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mode-dropdown-menu.is-active {
+  display: flex;
+}
+
+@keyframes dropdownSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.mode-menu-header {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.6rem 0.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 0.25rem;
+}
+
+/* Botones de Selección dentro del menú */
+.mode-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.mode-menu-item:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.mode-menu-item.active {
+  background: var(--color-info-bg);
+  border-color: rgba(2, 132, 199, 0.3);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .mode-menu-item.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.mode-item-icon {
+  font-size: 1.125rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mode-item-texts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mode-item-title {
+  font-weight: 800;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.mode-item-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.mode-item-check {
+  font-size: 0.875rem;
+  color: var(--marvel-red);
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.mode-menu-item.active .mode-item-check {
+  opacity: 1;
+}

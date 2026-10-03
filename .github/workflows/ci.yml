@@ -1,0 +1,105 @@
+name: CI/CD Pipeline & Delivery
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  # ============================================================================
+  # ETAPA 1: QUALITY GATE (LINT, TESTS Y BUILD)
+  # ============================================================================
+  test:
+    name: 🧪 Quality Gate (Lint & Tests)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Run Static Analysis & Linter
+        run: npm run lint
+
+      - name: 🧪 Run Automated Tests (Fail-Fast)
+        run: npm test
+
+      - name: 🏗️ Verify Production Bundle Build
+        run: npm run build
+
+  # ============================================================================
+  # ETAPA 2: DOCKER CONTAINER A GHCR (Solo tras merge a main)
+  # ============================================================================
+  build_and_push:
+    name: 🐳 Docker Build & Push (GHCR)
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔑 Login to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 📦 Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+  # ============================================================================
+  # ETAPA 3: CONTINUOUS DEPLOYMENT (RENDER AUTO-DEPLOY & HEALTHCHECK)
+  # ============================================================================
+  deploy_render:
+    name: 🚀 Auto-Deploy to Render
+    needs: build_and_push
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📡 Trigger Render Deploy Webhook
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+            echo "🚀 Invocando Render Deploy Hook..."
+            RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$RENDER_DEPLOY_HOOK")
+            HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+            if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
+              echo "✅ Deploy iniciado exitosamente en Render (HTTP $HTTP_CODE)"
+            else
+              echo "⚠️ Render Hook respondió con HTTP $HTTP_CODE"
+            fi
+          else
+            echo "ℹ️ Secret RENDER_DEPLOY_HOOK_URL no configurado."
+            echo "ℹ️ Render detectará automáticamente el push a main si el Auto-Deploy de Render está activo."
+          fi
